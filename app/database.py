@@ -2,11 +2,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# IMPORTANT: Replace with your actual PostgreSQL connection details
-# For local development, it might be "postgresql://localhost/proximity_db"
-SQLALCHEMY_DATABASE_URL = "postgresql://user:password@hostname/dbname"
+# This new line sets up SQLite, which creates a simple database file in your project.
+SQLALCHEMY_DATABASE_URL = "sqlite:///./proximity.db"
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+# This line is updated to include an argument required for SQLite with FastAPI.
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
+)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
